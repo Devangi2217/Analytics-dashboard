@@ -1,7 +1,61 @@
-﻿import BarChart from "@/components/BarChart";
+﻿"use client";
+
+import BarChart from "@/components/BarChart";
 import StatCard from "@/components/StatCard";
 import { activityFeed, kpis, revenueTrend, topProducts, trafficSources } from "@/lib/data";
 import { formatCurrency, formatPercent } from "@/lib/format";
+
+function downloadTextFile(filename: string, content: string, type = "text/plain") {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function buildCsvReport() {
+  const lines: string[] = [];
+
+  lines.push("Section,KPI,Value,Delta,Note");
+  kpis.forEach((kpi) => {
+    const value = kpi.format === "currency" ? formatCurrency(kpi.value) : kpi.value.toLocaleString();
+    lines.push(`KPI,${kpi.label},${value},${kpi.delta},${kpi.note}`);
+  });
+
+  lines.push("");
+  lines.push("Section,Revenue Velocity (Last 7 Days)");
+  lines.push("Day,Revenue");
+  revenueTrend.forEach((point) => {
+    lines.push(`${point.label},${formatCurrency(point.value)}`);
+  });
+
+  lines.push("");
+  lines.push("Section,Traffic Mix");
+  lines.push("Source,Share");
+  trafficSources.forEach((source) => {
+    lines.push(`${source.label},${formatPercent(source.share / 100)}`);
+  });
+
+  lines.push("");
+  lines.push("Section,Top Products");
+  lines.push("Product,Category,Revenue,Conversion");
+  topProducts.forEach((product) => {
+    lines.push(`${product.name},${product.category},${formatCurrency(product.revenue)},${formatPercent(product.conversion)}`);
+  });
+
+  lines.push("");
+  lines.push("Section,Release Activity");
+  lines.push("Title,Status,Time");
+  activityFeed.forEach((item) => {
+    lines.push(`${item.title},${item.status},${item.time}`);
+  });
+
+  return lines.join("\n");
+}
 
 export default function Home() {
   return (
@@ -16,7 +70,7 @@ export default function Home() {
           </p>
         </div>
         <div className="header-actions">
-          <a className="button primary" href="#">Export Report</a>
+          <button className="button primary" type="button" onClick={() => downloadTextFile("analytics-report.csv", buildCsvReport(), "text/csv")}>Export Report</button>
           <a className="button ghost" href="#">View API Status</a>
         </div>
       </header>
@@ -113,3 +167,6 @@ export default function Home() {
     </main>
   );
 }
+
+
+
