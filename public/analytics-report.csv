@@ -1,0 +1,35 @@
+Section,KPI,Value,Delta,Note
+KPI,Monthly Revenue,48290,12.4,vs last month
+KPI,Active Subscriptions,12840,6.1,last 30 days
+KPI,Churn Risk,2.4,-1.2,week over week
+KPI,Net Promoter Score,58,3.3,this quarter
+
+Section,Revenue Velocity (Last 7 Days)
+Day,Revenue
+Mon,48
+Tue,62
+Wed,58
+Thu,71
+Fri,66
+Sat,74
+Sun,69
+
+Section,Traffic Mix
+Source,Share
+Organic Search,38%
+Partner Referrals,26%
+Paid Social,18%
+Email Journeys,12%
+Community,6%
+
+Section,Top Products
+Product,Category,Revenue,Conversion
+Pulse Analytics,Enterprise,18450,0.32
+Atlas Workflows,Professional,15320,0.28
+Nova Sync,Growth,12680,0.24
+
+Section,Release Activity
+Title,Status,Time
+New anomaly alert pipeline deployed,Live,2 hours ago
+Updated pricing experiment results,Review,Yesterday
+Weekly data quality report,Sent,2 days ago
