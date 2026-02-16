@@ -17,7 +17,14 @@ export default function Home() {
         </div>
         <div className="header-actions">
           <a className="button primary" href="./analytics-report.csv" download>Export Report</a>
-          <a className="button ghost" href="#">View API Status</a>
+          <a
+            className="button ghost"
+            href="https://www.githubstatus.com/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View API Status
+          </a>
         </div>
       </header>
 
